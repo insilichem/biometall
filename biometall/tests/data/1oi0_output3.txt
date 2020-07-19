@@ -1,0 +1,6 @@
+Searching for motif: [GLU,GLU,ASP]
+Proposing mutations to achieve: [TYR,TYR]
+ # |   Coordinating residues    | Coordinates of center | Num. probes | Radius search | Proposed mutations                  
+---+----------------------------+-----------------------+-------------+---------------+-------------------------------------
+ 1 | GLU:25:A GLU:82:A ASP:83:A | -9.269 33.401 -43.234 |           1 | 0.000         | 27:A:[['TYR', 1]] 96:A:[['TYR', 1]] 
+*****Calculation took 10.56 seconds
