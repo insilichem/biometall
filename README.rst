@@ -90,7 +90,7 @@ Acknowledgements
 ----------------
 
 Project template based on the 
-[Computational Molecular Science Python Cookiecutter](https://github.com/molssi/cookiecutter-cms) version 1.2.
+`Computational Molecular Science Python Cookiecutter <https://github.com/molssi/cookiecutter-cms>`_ version 1.2.
 
 Standalone executables have been created with `PyInstaller <https://www.pyinstaller.org/>`_
 
