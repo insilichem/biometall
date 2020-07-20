@@ -53,12 +53,12 @@ Features
 - metalloenzyme design
 
 A more complete overview of the capabilities of the program illustrated with several case studies is
-available in our `ChemRxiv preprint <https://doi.org/10.26434/chemrxiv.12668651.v1>`. 
+available in our `ChemRxiv preprint <https://doi.org/10.26434/chemrxiv.12668651.v1>`_. 
 
 Documentation and support
 -------------------------
 
-Documentation is available at `this webpage <https://biometall.readthedocs.io/en/latest/>`
+Documentation is available at `this webpage <https://biometall.readthedocs.io/en/latest/>`_.
 
 If you need help with BioMetAll, please use the `issues page <https://github.com/insilichem/biometall/issues>`_ of our `GitHub repo <https://github.com/insilichem/biometall>`_. You can drop me a message at `joseemilio.sanchez@uab.cat <mailto:joseemilio.sanchez@uab.cat>`_ too.
 
@@ -77,7 +77,7 @@ OS Compatibility
 
 BioMetAll is compatible with Linux, macOS and Windows.
 
-Installation instructions are available at `this webpage <https://biometall.readthedocs.io/en/latest/installation.html>`
+Installation instructions are available at `this webpage <https://biometall.readthedocs.io/en/latest/installation.html>`_.
 
 If you find some dificulties when installing it in a concrete distribution, please use the `issues page <https://github.com/insilichem/biometall/issues>`_ to report them.
 
