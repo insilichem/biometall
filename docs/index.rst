@@ -12,7 +12,7 @@ Welcome to BioMetAll's documentation!
 BioMetAll is a command line application to allow the identification of metal-binding
 sites in proteins from backbone preorganization.
 
-.. image:: docs/images/logo_biometall.png
+.. image:: images/logo_biometall.png
     :alt: BioMetAll logo 
 
 .. toctree::
@@ -22,10 +22,4 @@ sites in proteins from backbone preorganization.
    getting_started.rst
    installation.rst
    tutorial1.rst
-  
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
