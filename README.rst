@@ -28,7 +28,7 @@ BioMetAll
 BioMetAll is a command line application to allow the identification of metal-binding
 sites in proteins from backbone preorganization.
 
-.. image:: docs/images/logo-biometall.png
+.. image:: docs/images/logo_biometall.png
     :alt: BioMetAll logo 
 
 Features
@@ -89,7 +89,7 @@ Copyright (c) 2020, Insilichem
 
 Acknowledgements
 ----------------
- 
+
 Project template based on the 
 [Computational Molecular Science Python Cookiecutter](https://github.com/molssi/cookiecutter-cms) version 1.2.
 
