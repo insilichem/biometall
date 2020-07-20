@@ -22,7 +22,7 @@ Standalone executable
 
 1 - Download the executable for your Operating System:
 
-- `Linux <https://raw.githubusercontent.com/insilichem/biometall/master/executables/linux/v01/biometall>`_. Tested on Ubuntu 16.04, 18.04 and 20.
+- `Linux <https://uab-my.sharepoint.com/:u:/g/personal/2132358_uab_cat/EUd5O3JKuaBKlfcu0kTXXSgByNIA_xWgC1CKsudpaYRJAA?e=9lF1J7>`_. Tested on Ubuntu 16.04, 18.04 and 20.
 
 - `macOS <https://raw.githubusercontent.com/insilichem/biometall/master/executables/macOS/v01/biometall>`_. Tested on macOS 10.15 Catalina.
 
