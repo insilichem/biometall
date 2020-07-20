@@ -72,7 +72,7 @@ BioMetAll is an open-source software licensed under the BSD-3 Clause License. Ch
 History of versions
 -------------------
 
-- **v0.1:** Release version used in the ellaboration of the ChemRxiv preprint.
+- **v0.1:** Release version used in the preparation of the ChemRxiv preprint.
 
 OS Compatibility
 ----------------
