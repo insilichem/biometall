@@ -60,6 +60,8 @@ Documentation and support
 
 Documentation is available at `this webpage <https://biometall.readthedocs.io/en/latest/>`_.
 
+Installation instructions are available at `this webpage <https://biometall.readthedocs.io/en/latest/installation.html>`_.
+
 If you need help with BioMetAll, please use the `issues page <https://github.com/insilichem/biometall/issues>`_ of this GitHub repository. You can drop me a message at `joseemilio.sanchez@uab.cat <mailto:joseemilio.sanchez@uab.cat>`_ too.
 
 License
@@ -76,8 +78,6 @@ OS Compatibility
 ----------------
 
 BioMetAll is compatible with Linux, macOS and Windows.
-
-Installation instructions are available at `this webpage <https://biometall.readthedocs.io/en/latest/installation.html>`_.
 
 If you find some dificulties when installing it in a concrete distribution, please use the `issues page <https://github.com/insilichem/biometall/issues>`_ to report them.
 
