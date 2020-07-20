@@ -60,7 +60,7 @@ Documentation and support
 
 Documentation is available at `this webpage <https://biometall.readthedocs.io/en/latest/>`_.
 
-If you need help with BioMetAll, please use the `issues page <https://github.com/insilichem/biometall/issues>`_ of our `GitHub repo <https://github.com/insilichem/biometall>`_. You can drop me a message at `joseemilio.sanchez@uab.cat <mailto:joseemilio.sanchez@uab.cat>`_ too.
+If you need help with BioMetAll, please use the `issues page <https://github.com/insilichem/biometall/issues>`_ of this GitHub repository. You can drop me a message at `joseemilio.sanchez@uab.cat <mailto:joseemilio.sanchez@uab.cat>`_ too.
 
 License
 -------
