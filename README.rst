@@ -52,7 +52,7 @@ Features
 - identification of conformational changes that alter the formation of metal-binding sites
 - metalloenzyme design
 
-A more complete overview of the capabilities of the program illustrated with several case studies is
+A more complete overview of the capabilities of the program, illustrated with several case studies, is
 available in our `ChemRxiv preprint <https://doi.org/10.26434/chemrxiv.12668651.v1>`_. 
 
 Documentation and support
