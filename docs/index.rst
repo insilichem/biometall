@@ -1,24 +1,28 @@
-.. biometall documentation master file, created by
-   sphinx-quickstart on Thu Mar 15 13:55:56 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. BioMetAll: Identifying metal-binding sites in proteins from backbone preorganization
+   
+   https://github.com/insilichem/biometall
+
+   Copyright 2020 José-Emilio Sánchez-Aparicio, Laura Tiessler-Sala,
+   Lorea Velasco-Carneros, Lorena Roldán-Martín, Giuseppe Sciortino,
+   Jean-Didier Maréchal
 
 Welcome to BioMetAll's documentation!
 =====================================
 
-BioMetAll is a python based software to predict metal binding areas in biological systems. It also allows to identify binding motifs (e.g. HIS/HIS/GLU) at structural level and can propose mutations to
-achieve those motifs.
+BioMetAll is a command line application to allow the identification of metal-binding
+sites in proteins from backbone preorganization.
+
+.. image:: docs/images/logo_biometall.png
+    :alt: BioMetAll logo 
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
    
-   getting_started
+   getting_started.rst
+   installation.rst
    tutorial1.rst
-   api
-
-
-
+  
 Indices and tables
 ==================
 
