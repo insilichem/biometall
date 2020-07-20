@@ -65,7 +65,7 @@ If you need help with BioMetAll, please use the `issues page <https://github.com
 License
 -------
 
-BioMetAll is licensed under the BSD-3 Clause License. Check the details in the `LICENSE <https://raw.githubusercontent.com/insilichem/biometall/blob/master/LICENSE>`_ file.
+BioMetAll is licensed under the BSD-3 Clause License. Check the details in the `LICENSE <https://github.com/insilichem/biometall/blob/master/LICENSE>`_ file.
 
 History of versions
 -------------------
