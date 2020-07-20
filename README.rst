@@ -84,7 +84,7 @@ If you find some dificulties when installing it in a concrete distribution, plea
 How to cite this software
 -------------------------
 
-(Sánchez-Aparicio, J.-E.; Tiessler-Sala, L.; Velasco-Carneros, L.; Roldán-Martín, L.; Sciortino, G.; Maréchal, J.-D.. Biometall: Identifying Metal-binding Sites in Proteins from Backbone Preorganization, 2020.
+Sánchez-Aparicio, J.-E.; Tiessler-Sala, L.; Velasco-Carneros, L.; Roldán-Martín, L.; Sciortino, G.; Maréchal, J.-D.. Biometall: Identifying Metal-binding Sites in Proteins from Backbone Preorganization, 2020.
 
 Acknowledgements
 ----------------
