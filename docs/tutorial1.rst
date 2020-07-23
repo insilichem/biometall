@@ -25,31 +25,31 @@ To execute the exploration of possible metal-binding zones, you simply should ca
 
 ::
 
-    ./biometall <path/to/the/input_file.pdb>
+    biometall <path/to/the/input_file.pdb>
 
     or
  
-    ./biometall 1dhy 
+    biometall 1dhy 
 
 
 
 
-You will obtain a list of solutions (i.e. the possible coordinating environments), followed by the coordinates of the center of the area, its radius and the number of probes which match the coordination criteria. In the case of **1dhy**, 404 solutions are obtained, being the first one an area formed by 44 probes.
+You will obtain a list of solutions (i.e. the possible coordinating environments), followed by the coordinates of the center of the area, its radius and the number of probes which match the coordination criteria. In the case of **1dhy**, 39 solutions are obtained, being the first one an area formed by 44 probes.
 
 - The results of the execution will be shown on the screen and saved in a `results_biometall_1dhy.txt` file in the working directory.
 - The different coordinating environments will be ordered by number of probes that match that environment. 
-- If one probe matches several coordinating environments (e.g. HIS:93:A GLN:95:A ASP:101:A and HIS:93:A GLN:95), that probe is accounted in all the environments it matches.
+- If one probe matches several coordinating environments (e.g. [HIS:145:A HIS:193:A HIS:194:A ASP:243:A] and [HIS:193:A HIS:194:A ASP:243:A]), that probe is accounted in all the environments it matches.
 - The center and radius provided for each solution defines the minimum sphere which contains all the probes of that solution.
 
 In addition to the `.txt` results file, you can obtain a `.pdb` file containing the different coordination areas with their corresponding centers. To do so, you should use the `--pdb` parameter:
 
 ::
 
-    ./biometall --pdb 1dhy
+    biometall --pdb 1dhy
 
 It will output a `probes_1dhy.pdb` that you can open together with your original `.pdb` file in any visualization program:
 
-.. image:: images/tutorial1_movie1.gif
+.. image:: images/tutorial1_movie3.gif
     :align: center
     :alt: Movie
 
@@ -68,7 +68,7 @@ By default, the program proposes as solutions all the coordinating environments.
 
 ::
 
-        ./biometall --cutoff 0.5 1dhy
+        biometall --cutoff 0.5 1dhy
 
 .. image:: images/tutorial1_image1.png
     :align: center
@@ -78,7 +78,7 @@ By default, the program proposes as solutions all the coordinating environments.
 
 ::
 
- ./biometall --cutoff 0.4 idhy
+ biometall --cutoff 0.4 idhy
     
 .. image:: images/tutorial1_image2.png
     :align: center
@@ -89,16 +89,16 @@ By default, the program proposes as solutions all the coordinating environments.
 By default, the list of amino acids that are considered as potential metal coordinators is:
 
 ::
+    ASP, HIS, GLU, CYS
+    
 
-    ASN, ASP, CYS, GLN, GLU, HIS, MET, SER, THR, TYR
-
-You can modify this list using the `--residues` parameter. You should indicate the amino acids in their 3-letter code, enclosed between brackets `[]` and separated by commas (without spaces). For example, to search for coordinating environments formed by histidines, aspartates and glutamates, you should type:
+You can modify this list using the `--residues` parameter. You should indicate the amino acids in their 3-letter code, enclosed between brackets `[]` and separated by commas (without spaces). For example, to search for coordinating environments formed by a (much) more extended set of amino acids, you could type:
 
 ::
 
-        ./biometall --pdb --residues [HIS,ASP,GLU] 1dhy
+        biometall --pdb --residues [ASN,ASP,CYS,GLN,GLU,HIS,MET,SER,THR,TYR] 1dhy
     
-.. image:: images/tutorial1_movie3.gif
+.. image:: images/tutorial1_movie1.gif
     :align: center
     :alt: Result of the execution
 
@@ -111,7 +111,7 @@ By default, coordinating environments with a minimum of **three amino acids** ar
 
 ::
 
-        ./biometall --pdb --min_coordinators 4 1dhy
+        biometall --pdb --min_coordinators 4 --residues [ASN,ASP,CYS,GLN,GLU,HIS,MET,SER,THR,TYR] 1dhy
 
 .. image:: images/tutorial1_movie4.gif
     :align: center
@@ -125,13 +125,13 @@ For example, to consider coordinations with backbone oxygens of histidines besid
    
 ::
 
-        ./biometall --backbone [HIS] 1dhy
+        biometall --backbone [HIS] 1dhy
     
 To consider coordinations with backbone oxygens of all amino acids and a minimum of four coordinators:
 
 ::
 
-        ./biometall --min_coordinators 4 --backbone ALL 1dhy
+        biometall --min_coordinators 4 --backbone ALL --residues [ASN,ASP,CYS,GLN,GLU,HIS,MET,SER,THR,TYR] 1dhy
 
 .. image:: images/tutorial1_movie5.gif
     :align: center
@@ -148,7 +148,7 @@ To consider coordinations with backbone oxygens of all amino acids and a minimum
 
 ::
 
-        ./biometall --grid 0.5 1dhy
+        biometall --grid 0.5 1dhy
 
 .. warning::
 
@@ -160,7 +160,7 @@ By default, the grid of probes is constructed to embed the whole system. If you 
 
 ::
 
-        ./biometall --center [84.98,42.82,16.04] --radius 10.0 1dhy
+        biometall --center [84.98,42.82,16.04] --radius 10.0 1dhy
 
 **2.7. Defining how many processors are used for the calculation  (`--cores`)**
 
@@ -168,7 +168,7 @@ By default, `BioMetAll` calculations are run in a parallel mode using all the ph
 
 ::
 
-        ./biometall --cores 2 1dhy
+        biometall --cores 2 1dhy
 
 3. Searching for a specific motif
 =================================
