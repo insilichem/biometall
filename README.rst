@@ -1,5 +1,5 @@
 .. BioMetAll: Identifying metal-binding sites in proteins from backbone preorganization
-   
+
    https://github.com/insilichem/biometall
 
    Copyright 2020 José-Emilio Sánchez-Aparicio, Laura Tiessler-Sala,
@@ -22,14 +22,14 @@ BioMetAll
 .. image:: https://img.shields.io/pypi/l/biometall
    :target: https://opensource.org/licenses/BSD-3-Clause
 
-.. image:: https://img.shields.io/badge/doi-10.26434%2Fchemrxiv.12668651.v1-blue 
+.. image:: https://img.shields.io/badge/doi-10.26434%2Fchemrxiv.12668651.v1-blue
    :target: https://doi.org/10.26434/chemrxiv.12668651.v1
 
 BioMetAll is a command line application to allow the identification of metal-binding
 sites in proteins from backbone preorganization.
 
 .. image:: docs/images/logo_biometall.png
-    :alt: BioMetAll logo 
+    :alt: BioMetAll logo
 
 Features
 --------
@@ -53,12 +53,12 @@ Features
 - metalloenzyme design
 
 A more complete overview of the capabilities of the program, illustrated with several case studies, is
-available in our `ChemRxiv preprint <https://doi.org/10.26434/chemrxiv.12668651.v1>`_. 
+available in our `ChemRxiv preprint <https://doi.org/10.26434/chemrxiv.12668651.v1>`_.
 
 Documentation and support
 -------------------------
 
-Documentation is available at `this webpage <https://biometall.readthedocs.io/en/latest/>`_.
+Documentation is available at `this link <https://biometall.readthedocs.io/en/latest/>`_.
 
 Installation instructions are available at `this webpage <https://biometall.readthedocs.io/en/latest/installation.html>`_.
 
@@ -89,7 +89,7 @@ Sánchez-Aparicio, J.-E.; Tiessler-Sala, L.; Velasco-Carneros, L.; Roldán-Mart�
 Acknowledgements
 ----------------
 
-Project template based on the 
+Project template based on the
 `Computational Molecular Science Python Cookiecutter <https://github.com/molssi/cookiecutter-cms>`_ version 1.2.
 
 Standalone executables have been created with `PyInstaller <https://www.pyinstaller.org/>`_

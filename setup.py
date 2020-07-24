@@ -1,6 +1,6 @@
 """
-biometall
-ict feasible metal binding areas into preoteins
+BioMetAll
+BioMetAll is a command line application to allow the identification of metal-binding sites in proteins from backbone preorganization.
 """
 import sys
 from setuptools import setup, find_packages
@@ -13,7 +13,7 @@ needs_pytest = {'pytest', 'test', 'ptr'}.intersection(sys.argv)
 pytest_runner = ['pytest-runner'] if needs_pytest else []
 
 try:
-    with open("README.md", "r") as handle:
+    with open("README.rst", "r") as handle:
         long_description = handle.read()
 except:
     long_description = "\n".join(short_description[2:])
@@ -21,12 +21,12 @@ except:
 
 setup(
     # Self-descriptive entries which should always be present
-    name='biometall',
+    name='BioMetAll',
     author='Insilichem',
     author_email='joseemilio.sanchez@uab.cat',
     description=short_description[0],
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type="text/x-rst",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     license='BSD-3-Clause',
@@ -47,11 +47,11 @@ setup(
     # Additional entries you may want simply uncomment the lines you want and fill in the data
     # url='http://www.my_package.com',  # Website
     install_requires=['numpy','psutil'],  # Required packages, pulls from pip if needed; do not use for Conda deployment
-    # platforms=['Linux',
-    #            'Mac OS-X',
-    #            'Unix',
-    #            'Windows'],            # Valid platforms your code works on, adjust to your flavor
-    # python_requires=">=3.5",          # Python version restrictions
+    platforms=['Linux',
+                'Mac OS-X',
+                'Unix',
+                'Windows'],            # Valid platforms your code works on, adjust to your flavor
+    python_requires=">=3.5",          # Python version restrictions
 
     # Manual control if final package is compressible or not, set False to prevent the .egg from being made
     # zip_safe=False,
