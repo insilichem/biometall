@@ -1,6 +1,6 @@
 """
 biometall
-ict feasible metal binding areas into preoteins
+Software to predict feasible metal binding areas into preoteins
 """
 import sys
 from setuptools import setup, find_packages
@@ -27,8 +27,8 @@ setup(
     description=short_description[0],
     long_description=long_description,
     long_description_content_type="text/markdown",
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    version="0.2.dev0",
+    #cmdclass=versioneer.get_cmdclass(),
     license='BSD-3-Clause',
 
     # Which Python importable modules should be included when your package is installed
