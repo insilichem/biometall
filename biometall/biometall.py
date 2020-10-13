@@ -30,7 +30,8 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
         residues='[ASP,HIS,GLU,CYS]', motif='', grid_step=1.0,
         consider_backbone_residues='[]', cluster_cutoff=0.0, pdb=False,
         propose_mutations_to='', custom_radius=None, custom_center=None,
-        cores_number=None, backbone_clashes_threshold=1.0, **kwargs):
+        cores_number=None, backbone_clashes_threshold=1.0,
+        sidechain_clashes_threshold=0.0, **kwargs):
     filename, file_extension = os.path.splitext(inputfile)
 
     if motif:
@@ -104,7 +105,7 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
     else:
         raise Exception("The input should be a valid PDB code or a file of a valid type: " + str(ALLOWED_FILE_TYPES))
 
-    centroid, radius, alphas, betas, carbons, nitrogens, oxygens, column_for_res, res_for_column, name_for_res, atoms_in_res = _parse_molecule(lines, file_extension)
+    centroid, radius, alphas, betas, carbons, nitrogens, oxygens, column_for_res, res_for_column, name_for_res, atoms_in_res, side_chains = _parse_molecule(lines, file_extension)
 
     #Alpha-Beta and Oxygen-Carbon distances for further use
     alpha_beta_distances = np.sqrt((np.square(betas-alphas).sum(axis=1)))
@@ -121,17 +122,21 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
 
     grids = [grid[i * n:(i + 1) * n] for i in range((len(grid) + n - 1) // n )]
 
-    coordination_chunks = pool.map(partial(_test_chunk, alphas=alphas, betas=betas,
-                        carbons=carbons, nitrogens=nitrogens, oxygens=oxygens,
+    coordination_chunks = pool.map(partial(_test_chunk, alphas=alphas,
+                        betas=betas, carbons=carbons, nitrogens=nitrogens,
+                        oxygens=oxygens, side_chains=side_chains,
                         alpha_beta_distances=alpha_beta_distances,
                         oxygen_carbon_distances=oxygen_carbon_distances,
-                        name_for_res=name_for_res, column_for_res=column_for_res,
-                        res_for_column=res_for_column, atoms_in_res=atoms_in_res,
+                        name_for_res=name_for_res,
+                        column_for_res=column_for_res,
+                        res_for_column=res_for_column,
+                        atoms_in_res=atoms_in_res,
                         consider_backbone_residues=consider_backbone_residues,
                         DIST_PROBE_ALPHA=DIST_PROBE_ALPHA,
                         DIST_PROBE_BETA=DIST_PROBE_BETA,
                         ANGLE_PAB=ANGLE_PAB,
-                        bck_clashes=backbone_clashes_threshold), grids)
+                        bck_clashes=backbone_clashes_threshold,
+                        sc_clashes=sidechain_clashes_threshold), grids)
 
     centers, mutations = clustering(coordination_chunks, residues, motifs, min_coordinators, min_sidechain,
                     consider_backbone_residues, mutated_motif, cluster_cutoff, filename, name_for_res, res_for_column, atoms_in_res)
@@ -226,7 +231,7 @@ def clustering(coordination_chunks, residues, motifs, min_coordinators, min_side
             for probe_idx, res_idx in coordinations[possible_coord_name][0,:,:]:
                 if not mutated_motif and (possible_coord_name != name_for_res[res_for_column[res_idx]]): #discarded due to different residue name
                     continue
-                if probe_idx in discarded[0,:,0]: #residue is discarded for that probe
+                if probe_idx in discarded: #residue is discarded for that probe
                     continue
                 elif ('CA' not in atoms_in_res[res_for_column[res_idx]]) or ('CB' not in atoms_in_res[res_for_column[res_idx]]):
                     continue
@@ -240,7 +245,7 @@ def clustering(coordination_chunks, residues, motifs, min_coordinators, min_side
                             coordinators[probe_idx][res_idx].append(possible_coord_name)
         if consider_backbone_residues:
             for probe_idx, res_idx in coordinations["BCK"][0,:,:]:
-                if (np.array(probe_idx, res_idx) == discarded[0,:,:]).all(1).any(): #residue is discarded for that probe
+                if probe_idx in discarded:
                     continue
                 if (name_for_res[res_for_column[res_idx]] not in consider_backbone_residues) and consider_backbone_residues != "ALL": #discarded due to not searched residue
                     continue
@@ -342,12 +347,12 @@ def clustering(coordination_chunks, residues, motifs, min_coordinators, min_side
 
     return centers, dict_mutations
 
-def _test_chunk(grid, alphas, betas, carbons, nitrogens, oxygens,
+def _test_chunk(grid, alphas, betas, carbons, nitrogens, oxygens, side_chains,
                         alpha_beta_distances, oxygen_carbon_distances,
                         name_for_res, column_for_res, res_for_column,
                         atoms_in_res, consider_backbone_residues,
                         DIST_PROBE_ALPHA, DIST_PROBE_BETA, ANGLE_PAB,
-                        bck_clashes):
+                        bck_clashes, sc_clashes):
     alpha_distances = np.sqrt((np.square(grid[:,np.newaxis]-alphas).sum(axis=2)))
     beta_distances = np.sqrt((np.square(grid[:,np.newaxis]-betas).sum(axis=2)))
     carbon_distances = np.sqrt((np.square(grid[:,np.newaxis]-carbons).sum(axis=2)))
@@ -369,8 +374,14 @@ def _test_chunk(grid, alphas, betas, carbons, nitrogens, oxygens,
                                                 (ANGLE_PAB[res_name][0]<=PAB_angles) & (PAB_angles<=ANGLE_PAB[res_name][1])))
     # If there is a clash (distance < bck_clashes) with a backbone atom,
     # no coordination is possible for that probe
-    discarded = np.dstack(np.where((oxygen_distances<bck_clashes) |
-                                   (carbon_distances<bck_clashes) |
-                                   (nitrogen_distances<bck_clashes) |
-                                   (alpha_distances<bck_clashes)))
+    discarded = set(np.where((oxygen_distances<bck_clashes) |
+                            (carbon_distances<bck_clashes) |
+                            (nitrogen_distances<bck_clashes) |
+                            (alpha_distances<bck_clashes))[0])
+
+    if sc_clashes > 0:
+        for sc_atom in side_chains:
+            sidechain_distances = np.sqrt((np.square(grid[:,np.newaxis]-sc_atom).sum(axis=2)))
+            discarded = discarded.union(set(np.where(sidechain_distances<sc_clashes)[0]))
+
     return [grid, coords, discarded]

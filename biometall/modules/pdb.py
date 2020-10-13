@@ -96,6 +96,7 @@ def _parse_molecule(lines, file_extension):
         carbons = [[0.0, 0.0, 0.0] for i in range(0, len(list(column_for_res)))]
         nitrogens = [[0.0, 0.0, 0.0] for i in range(0, len(list(column_for_res)))]
         oxygens = [[0.0, 0.0, 0.0] for i in range(0, len(list(column_for_res)))]
+        side_chains = []
         coords_array = [] #For calculate grid size
 
         for line in lines:
@@ -143,6 +144,9 @@ def _parse_molecule(lines, file_extension):
                 elif atom_name == "O":
                     # Coordinates for searching sites
                     oxygens[column_for_res[res]] = coord
+                else: # Atom belongs to a side-chain
+                    # Coordinates for discarding clashes
+                    side_chains.append(coord)
 
         coords_array = np.array(coords_array)
         centroid =  np.mean(coords_array, axis=0)
@@ -154,8 +158,10 @@ def _parse_molecule(lines, file_extension):
         carbons = np.array(carbons)
         nitrogens = np.array(nitrogens)
         oxygens = np.array(oxygens)
-    return centroid, max_distance, alphas, betas, carbons, nitrogens, oxygens, \
-            column_for_res, res_for_column, name_for_res, atoms_in_res
+        side_chains = np.array(side_chains)
+    return centroid, max_distance, alphas, betas, carbons, nitrogens, \
+            oxygens, column_for_res, res_for_column, name_for_res, \
+            atoms_in_res, side_chains
 
 def _print_pdb(sorted_data, filename):
     """
@@ -179,6 +185,7 @@ def _print_pdb(sorted_data, filename):
     for one_result in sorted_data:
         chains = set()
         for r in one_result[0]:
+            r = r.strip("_BCK")
             chains.add(r.split(":")[1])
         cen_str = ""
         for r in one_result[1]:
