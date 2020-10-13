@@ -27,27 +27,27 @@ from .modules.pdb import _parse_molecule, _print_pdb
 from .modules.motif import _check_actual_motif, _check_possible_mutations
 
 def run(inputfile, min_coordinators=3, min_sidechain=2,
-        residues='[ASP,HIS,GLU,CYS]', motif='', grid_step=1.0, 
-        consider_backbone_residues='[]', cluster_cutoff=0.0, pdb=False, 
-        propose_mutations_to='', custom_radius=None, custom_center=None, 
-        cores_number=None, **kwargs):
+        residues='[ASP,HIS,GLU,CYS]', motif='', grid_step=1.0,
+        consider_backbone_residues='[]', cluster_cutoff=0.0, pdb=False,
+        propose_mutations_to='', custom_radius=None, custom_center=None,
+        cores_number=None, backbone_clashes_threshold=1.0, **kwargs):
     filename, file_extension = os.path.splitext(inputfile)
 
     if motif:
         motifs = list(map(str, motif.strip('[]').split(',')))
         motifs_list = []
         for mot in motifs:
-            motifs_list.append(list(map(str, mot.split('/')))) 
+            motifs_list.append(list(map(str, mot.split('/'))))
         motifs = motifs_list
         motifs.sort(key=len)
     else:
         motifs = None
     if propose_mutations_to:
-        mutated_motif = list(map(str, 
+        mutated_motif = list(map(str,
                                 propose_mutations_to.strip('[]').split(',')))
         mutated_motif_list = []
         for mot in mutated_motif:
-            mutated_motif_list.append(list(map(str, mot.split('/')))) 
+            mutated_motif_list.append(list(map(str, mot.split('/'))))
         mutated_motif = mutated_motif_list
         mutated_motif.sort(key=len)
     else:
@@ -66,7 +66,7 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
         if min_coordinators < len(motifs):
             min_coordinators = len(motifs)
             print("min_coordinators has been set to {} due to the motif length".format(len(motifs)))
-    
+
     #Set residues to consider as coordinating
     if propose_mutations_to:
         tot = mutated_motif_list + motifs_list
@@ -81,14 +81,14 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
         consider_backbone_residues = 'ALL'
     else:
         consider_backbone_residues = list(map(str, consider_backbone_residues.strip('[]').split(',')))
-        
+
 
     t0 = time.time()
 
     if not cores_number:
-        cores_number = psutil.cpu_count(logical=False)        
+        cores_number = psutil.cpu_count(logical=False)
     pool = multiprocessing.Pool(cores_number)
-    
+
     #Parse inputfile to obtain atom coords
     if file_extension in ALLOWED_FILE_TYPES:
         with open(inputfile, "r") as f:
@@ -103,7 +103,7 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
             raise Exception("The input should be a valid PDB code or a file of a valid type: " + str(ALLOWED_FILE_TYPES))
     else:
         raise Exception("The input should be a valid PDB code or a file of a valid type: " + str(ALLOWED_FILE_TYPES))
-    
+
     centroid, radius, alphas, betas, carbons, nitrogens, oxygens, column_for_res, res_for_column, name_for_res, atoms_in_res = _parse_molecule(lines, file_extension)
 
     #Alpha-Beta and Oxygen-Carbon distances for further use
@@ -118,19 +118,20 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
 
     #Split grid in chunks (to ensure a good use of the memory/processors)
     n = _chunk_size(len(grid), len(alphas), cores_number)
-    
+
     grids = [grid[i * n:(i + 1) * n] for i in range((len(grid) + n - 1) // n )]
 
     coordination_chunks = pool.map(partial(_test_chunk, alphas=alphas, betas=betas,
-                        carbons=carbons, nitrogens=nitrogens, oxygens=oxygens, 
-                        alpha_beta_distances=alpha_beta_distances, 
+                        carbons=carbons, nitrogens=nitrogens, oxygens=oxygens,
+                        alpha_beta_distances=alpha_beta_distances,
                         oxygen_carbon_distances=oxygen_carbon_distances,
-                        name_for_res=name_for_res, column_for_res=column_for_res, 
+                        name_for_res=name_for_res, column_for_res=column_for_res,
                         res_for_column=res_for_column, atoms_in_res=atoms_in_res,
-                        consider_backbone_residues=consider_backbone_residues, 
-                        DIST_PROBE_ALPHA=DIST_PROBE_ALPHA, 
-                        DIST_PROBE_BETA=DIST_PROBE_BETA, 
-                        ANGLE_PAB=ANGLE_PAB), grids)
+                        consider_backbone_residues=consider_backbone_residues,
+                        DIST_PROBE_ALPHA=DIST_PROBE_ALPHA,
+                        DIST_PROBE_BETA=DIST_PROBE_BETA,
+                        ANGLE_PAB=ANGLE_PAB,
+                        bck_clashes=backbone_clashes_threshold), grids)
 
     centers, mutations = clustering(coordination_chunks, residues, motifs, min_coordinators, min_sidechain,
                     consider_backbone_residues, mutated_motif, cluster_cutoff, filename, name_for_res, res_for_column, atoms_in_res)
@@ -160,8 +161,8 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
         residues_str = ' '.join(res for res in residues)
         coord_str = ' '.join([str(format(r, '.3f')) for r in one_center[1]])
         pos_str, radius_str, probes_str = str(pos), str(format(one_center[3], '.3f')), str(one_center[2])
-        
-        if propose_mutations_to:  
+
+        if propose_mutations_to:
             mutations_str = ' '.join([str(res) + ":" + str(mut) for (res,mut) in mutations[one_center[0]]])
             if len(mutations_str) > mutations_width:
                 mutations_width = len(mutations_str)
@@ -186,7 +187,7 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
         print(' {:>{pos_width}} | {:<{residues_width}} | {:^{coord_width}} | {:>{probes_width}} | {:<{radius_width}} | {:<{mutations_width}} '.format(
                 line[0], line[1], line[2], line[3], line[4], line[5], pos_width=pos_width, residues_width=residues_width,
                 coord_width=coord_width, probes_width=probes_width, radius_width=radius_width, mutations_width=mutations_width))
-    
+
     text_filename = "results_biometall_%s%s.txt" %(os.path.basename(filename), file_name_addendum)
     text_filename = os.path.join(os.path.dirname(inputfile), text_filename)
     f = open(text_filename, "w")
@@ -207,8 +208,8 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
     f.close()
     print("{0:.2f} seconds".format(time.time() - t0))
 
-def clustering(coordination_chunks, residues, motifs, min_coordinators, min_sidechain, 
-            consider_backbone_residues, mutated_motif, cluster_cutoff, filename, 
+def clustering(coordination_chunks, residues, motifs, min_coordinators, min_sidechain,
+            consider_backbone_residues, mutated_motif, cluster_cutoff, filename,
             name_for_res, res_for_column, atoms_in_res):
     dict_cluster = {}
     dict_mutations = {}
@@ -262,8 +263,8 @@ def clustering(coordination_chunks, residues, motifs, min_coordinators, min_side
                     resting_coordinators = copy.deepcopy(coordinators[probe_idx])
                     for r in actual_motif_solution:
                         del resting_coordinators[r]
-                    mutation_motif_solutions = _check_possible_mutations(mutated_motif_possibilities, residues_of_mutated_motif, resting_coordinators)    
-            
+                    mutation_motif_solutions = _check_possible_mutations(mutated_motif_possibilities, residues_of_mutated_motif, resting_coordinators)
+
             if motifs and mutated_motif and actual_motif_solutions and mutation_motif_solutions:
                 #Searching for already present motifs plus proposing mutations
                 #already present motifs
@@ -320,7 +321,7 @@ def clustering(coordination_chunks, residues, motifs, min_coordinators, min_side
                         sc_num = sum("BCK" not in L for L in el)
                         if (el not in dict_cluster) and sc_num >= min_sidechain:
                             dict_cluster[el] = [probes[probe_idx]]
-    
+
     #Order Mutation information
     for coord_environment in list(dict_mutations):
         for residue in list(dict_mutations[coord_environment]):
@@ -333,7 +334,7 @@ def clustering(coordination_chunks, residues, motifs, min_coordinators, min_side
     except:
         print("None possible coordinating sites have been found. Try again with other parameters or check/change the input file.")
         sys.exit()
-    
+
     for coord_residues,probes in dict_cluster.items():
         if len(probes) >= max_probes*cluster_cutoff:
             center, radius_search = _calculate_center_and_radius(probes)
@@ -341,11 +342,12 @@ def clustering(coordination_chunks, residues, motifs, min_coordinators, min_side
 
     return centers, dict_mutations
 
-def _test_chunk(grid, alphas, betas, carbons, nitrogens, oxygens, 
+def _test_chunk(grid, alphas, betas, carbons, nitrogens, oxygens,
                         alpha_beta_distances, oxygen_carbon_distances,
-                        name_for_res, column_for_res, res_for_column, 
-                        atoms_in_res, consider_backbone_residues, DIST_PROBE_ALPHA, 
-                        DIST_PROBE_BETA, ANGLE_PAB):
+                        name_for_res, column_for_res, res_for_column,
+                        atoms_in_res, consider_backbone_residues,
+                        DIST_PROBE_ALPHA, DIST_PROBE_BETA, ANGLE_PAB,
+                        bck_clashes):
     alpha_distances = np.sqrt((np.square(grid[:,np.newaxis]-alphas).sum(axis=2)))
     beta_distances = np.sqrt((np.square(grid[:,np.newaxis]-betas).sum(axis=2)))
     carbon_distances = np.sqrt((np.square(grid[:,np.newaxis]-carbons).sum(axis=2)))
@@ -359,17 +361,16 @@ def _test_chunk(grid, alphas, betas, carbons, nitrogens, oxygens,
     # include backbone coordinations
     if consider_backbone_residues:
         coords["BCK"] = np.dstack(np.where((DIST_PROBE_OXYGEN[0]<=oxygen_distances) & (oxygen_distances<=DIST_PROBE_OXYGEN[1]) &
-                                (ANGLE_POC[0]<=POC_angles) & (POC_angles<=ANGLE_POC[1])))    
+                                (ANGLE_POC[0]<=POC_angles) & (POC_angles<=ANGLE_POC[1])))
     # include sidechain coordinations (Alpha+Beta)
     for res_name in list(DIST_PROBE_ALPHA):
         coords[res_name] = np.dstack(np.where((DIST_PROBE_ALPHA[res_name][0]<=alpha_distances) & (alpha_distances<=DIST_PROBE_ALPHA[res_name][1]) &
                                                 (DIST_PROBE_BETA[res_name][0]<=beta_distances) & (beta_distances<=DIST_PROBE_BETA[res_name][1]) &
                                                 (ANGLE_PAB[res_name][0]<=PAB_angles) & (PAB_angles<=ANGLE_PAB[res_name][1])))
-
-    # Check and discard possible clashes with backbone atoms
-    # If there is a clash (distance < 1.0) with a backbone atom,
+    # If there is a clash (distance < bck_clashes) with a backbone atom,
     # no coordination is possible for that probe
-    discarded = np.dstack(np.where((oxygen_distances<1.0) | (carbon_distances<1.0) | (nitrogen_distances<1.0) | (alpha_distances<1.0)))
-
+    discarded = np.dstack(np.where((oxygen_distances<bck_clashes) |
+                                   (carbon_distances<bck_clashes) |
+                                   (nitrogen_distances<bck_clashes) |
+                                   (alpha_distances<bck_clashes)))
     return [grid, coords, discarded]
-
