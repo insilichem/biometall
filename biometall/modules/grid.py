@@ -10,12 +10,12 @@ def _grid(centroid, radius, step):
     """
     Generates a list of points that will be used as probes to test coordination.
 
-    A spherical grid of equiseparated points (i.e. probes) is constructed aimed 
-    to contain the whole biological system (or a zone of it in case of user 
-    request). The `centroid` and `radius` parameters of the method are obtained 
-    either when parsing the input `.pdb` file (grid containing the whole 
-    molecule) or entered by the user with `--center` and `--radius` parameters 
-    of the program (only this zone of the molecule will be explored). The `step` 
+    A spherical grid of equiseparated points (i.e. probes) is constructed aimed
+    to contain the whole biological system (or a zone of it in case of user
+    request). The `centroid` and `radius` parameters of the method are obtained
+    either when parsing the input `.pdb` file (grid containing the whole
+    molecule) or entered by the user with `--center` and `--radius` parameters
+    of the program (only this zone of the molecule will be explored). The `step`
     parameter determines the distance between points of the grid.
 
     Parameters
@@ -24,6 +24,8 @@ def _grid(centroid, radius, step):
         Array of 3 floats defining the center of the sphere
     radius : float
         Radius of the sphere used to construct the grid
+    step : float
+        Distance, in Angstroms, between two consecutive probes
 
     Returns
     -------
@@ -33,7 +35,7 @@ def _grid(centroid, radius, step):
     #1. Two points at the ends of a cube of l=2*radius are obtained
     xmi, ymi, zmi = centroid - radius
     xma, yma, zma = centroid + radius
-    
+
     #2. Each axis x, y and z is splitted at every step distance
     numx = int((xma - xmi) / step) + 1
     numy = int((yma - ymi) / step) + 1
@@ -50,9 +52,11 @@ def _grid(centroid, radius, step):
                 grid.append([x[i], y[j], z[k]])
     points = np.array(grid) #Cube embedding the protein
 
-    #4. Points out of the sphere are discarded and the spherical grid returned
+    #4. Points out of the sphere are discarded
     is_in_sphere = np.linalg.norm(points - centroid, axis=1) <= radius
-    return points[is_in_sphere, :]
+    points = points[is_in_sphere, :]
+
+    return points
 
 def _calculate_center_and_radius(probes):
     """
@@ -60,10 +64,10 @@ def _calculate_center_and_radius(probes):
     point.
 
     Euclidean distances from all the points to all the points of the list (i.e.
-    `probes`) are calculated (i.e. distance_matrix). Then, the point with the 
-    smallest sum of distances is considered the most central. The distance from 
-    this central point to its farthest would be the radius which is necessary to 
-    embed all the points in a sphere. 
+    `probes`) are calculated (i.e. distance_matrix). Then, the point with the
+    smallest sum of distances is considered the most central. The distance from
+    this central point to its farthest would be the radius which is necessary to
+    embed all the points in a sphere.
 
     Parameters
     ----------
@@ -75,15 +79,15 @@ def _calculate_center_and_radius(probes):
     array_like
         3-float array containing the coordinates of the most central point
     float
-        radius of the sphere which is necessary to embed all points 
+        radius of the sphere which is necessary to embed all points
     """
     probes = np.array(probes)
-    
+
     #1. Euclidean distance from all to all probes
     distance_matrix = np.linalg.norm(probes - probes[:,None], axis=-1)
-    
+
     #2. Search for the most central point of the list
-    for i, probe in enumerate(distance_matrix): 
+    for i, probe in enumerate(distance_matrix):
         sum_dist_probe = sum(probe) #Sum of distances to all the other probes
         if i == 0:
             min_sum_dist = sum_dist_probe
@@ -94,14 +98,14 @@ def _calculate_center_and_radius(probes):
                 min_sum_dist = sum_dist_probe
                 best_probe = i
                 highest_dist = max(probe)
-    return probes[best_probe], highest_dist    
+    return probes[best_probe], highest_dist
 
 def _chunk_size(len_grid, len_protein, n_cores, optimize_to=2147483648):
     """
     Calculates the number of probes per chunk.
 
     To split the calculation in several cores (processors), the grid of probes
-    is divided in chunks. This method takes into account the memory and the 
+    is divided in chunks. This method takes into account the memory and the
     number of cores to find a good balanced size for the chunks.
 
     Parameters
@@ -123,8 +127,8 @@ def _chunk_size(len_grid, len_protein, n_cores, optimize_to=2147483648):
 
     Notes
     -----
-    The maximum memory employed by the calculation could in fact be higher than 
-    the requested in the `optimize_to`. Before starting the actual biometall 
+    The maximum memory employed by the calculation could in fact be higher than
+    the requested in the `optimize_to`. Before starting the actual biometall
     calculation, there is a process to load in memory the .pdb, so if that .pdb
     is bigger than `optimize_to`, the maximum memory employed will be the size
     of the .pdb instead of the size of the chunks.

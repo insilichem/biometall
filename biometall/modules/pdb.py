@@ -13,7 +13,7 @@ def _parse_molecule(lines, file_extension):
     All the atoms of the protein areparsed by searching those of type alpha
     carbon, beta carbon, backbone carbon, backbone nitrogen and backbone oxygen.
     Their coordinates are stored in separated numpy arrays for further use in
-    the BioMetAll calculation. Also, it generates dictionaries to control the 
+    the BioMetAll calculation. Also, it generates dictionaries to control the
     correspondence between residues and column numbers of the numpy arrays.
     Finally, the centroid and distance to the furthest atom of the protein are
     calculated to allow the generation of the grid of probes.
@@ -30,7 +30,7 @@ def _parse_molecule(lines, file_extension):
     np.array
         3-float numpy array containing the centroid of the protein
     float
-        Distance to the furthest atom, adding a security margin to account for 
+        Distance to the furthest atom, adding a security margin to account for
         a possible superficial coordination
     np.array
         Array of 3-D coordinates for all the alpha carbons of the protein
@@ -42,6 +42,8 @@ def _parse_molecule(lines, file_extension):
         Array of 3-D coordinates for all the backbone nitrogens of the protein
     np.array
         Array of 3-D coordinates for all the backbone oxygens of the protein
+    np.array
+        Array of 3-D coordinates for all the side-chain atoms of the protein
     dict
         Correspondence between number:chain of residue and column number
     dict
@@ -73,7 +75,7 @@ def _parse_molecule(lines, file_extension):
                     atom_name = split_list[0]
 
                 if atom_name in ['CA', 'CB', 'C', 'N', 'O']:
-                    altloc = line[16]         
+                    altloc = line[16]
                     chainid = line[21]
                     resid = line[22:26].split()[0]
                     res = str(resid) + ":" + str(chainid)
@@ -87,15 +89,16 @@ def _parse_molecule(lines, file_extension):
                         atoms_in_res[res] = set()
                         i += 1
                     atoms_in_res[res].add(atom_name)
-        
+
         #Extract coordinates and atoms information
         alphas = [[0.0, 0.0, 0.0] for i in range(0, len(list(column_for_res)))]
         betas = [[0.0, 0.0, 0.0] for i in range(0, len(list(column_for_res)))]
         carbons = [[0.0, 0.0, 0.0] for i in range(0, len(list(column_for_res)))]
         nitrogens = [[0.0, 0.0, 0.0] for i in range(0, len(list(column_for_res)))]
         oxygens = [[0.0, 0.0, 0.0] for i in range(0, len(list(column_for_res)))]
+        side_chains = []
         coords_array = [] #For calculate grid size
-        
+
         for line in lines:
             record_type = line[0:6]
             if record_type == "ATOM  ":
@@ -109,7 +112,7 @@ def _parse_molecule(lines, file_extension):
                 else:
                     # atom name is like " CA ", so we can strip spaces
                     atom_name = split_list[0]
-            
+
                 chainid = line[21]
                 resid = line[22:26].split()[0]
                 res = str(resid) + ":" + str(chainid)
@@ -141,26 +144,31 @@ def _parse_molecule(lines, file_extension):
                 elif atom_name == "O":
                     # Coordinates for searching sites
                     oxygens[column_for_res[res]] = coord
+                else: # Atom belongs to a side-chain
+                    # Coordinates for discarding clashes
+                    side_chains.append(coord)
 
         coords_array = np.array(coords_array)
         centroid =  np.mean(coords_array, axis=0)
         max_distance  = np.max(np.linalg.norm(coords_array - centroid, axis=1)) \
                         + DIST_PROBE_ALPHA['ALL'][1]
-        
+
         alphas = np.array(alphas)
         betas = np.array(betas)
         carbons = np.array(carbons)
         nitrogens = np.array(nitrogens)
-        oxygens = np.array(oxygens)   
-    return centroid, max_distance, alphas, betas, carbons, nitrogens, oxygens, \
-            column_for_res, res_for_column, name_for_res, atoms_in_res
+        oxygens = np.array(oxygens)
+        side_chains = np.array(side_chains)
+    return centroid, max_distance, alphas, betas, carbons, nitrogens, \
+            oxygens, column_for_res, res_for_column, name_for_res, \
+            atoms_in_res, side_chains
 
 def _print_pdb(sorted_data, filename):
     """
     Generates a .pdb file containing the probes of the BioMetAll calculation.
 
-    Each coordinating environment obtained from the BioMetAll calculation is 
-    stored as a different residue, being the centroid probe a Helium atom and 
+    Each coordinating environment obtained from the BioMetAll calculation is
+    stored as a different residue, being the centroid probe a Helium atom and
     all the probes Xeon atoms.
 
     Parameters
@@ -168,7 +176,7 @@ def _print_pdb(sorted_data, filename):
     sorted_data : array_like
         Data obtained from the clustering of BioMetAll results
     filename : str
-        Name of the output .pdb file. Usually with format `probes_xxxx.pdb` in 
+        Name of the output .pdb file. Usually with format `probes_xxxx.pdb` in
         the working directory.
     """
     file_pdb = open(filename,"w")
@@ -177,6 +185,7 @@ def _print_pdb(sorted_data, filename):
     for one_result in sorted_data:
         chains = set()
         for r in one_result[0]:
+            r = r.strip("_BCK")
             chains.add(r.split(":")[1])
         cen_str = ""
         for r in one_result[1]:
@@ -194,7 +203,7 @@ def _print_pdb(sorted_data, filename):
         for prob in one_result[4]:
             num_at += 1
             prb_str = ""
-            for p in prob:  
+            for p in prob:
                 prb_center = "{:.8s}".format(str(round(float(p),3)))
                 if len(prb_center)<8:
                     prb_center = " "*(8-len(prb_center)) + prb_center
