@@ -198,7 +198,7 @@ def _print_pdb(sorted_data, filename):
         num_at += 1
         num_res += 1
         for ch in chains:
-            file_pdb.write("ATOM" +" "*(7-len(str(num_at))) + "%s   N  SLN %s" %(num_at, ch))
+            file_pdb.write("ATOM" +" "*(7-len(str(num_at))) + "%s  HE  SLN %s" %(num_at, ch))
             file_pdb.write(" "*(3-len(str(num_res))) + "%s     %s  1.00  0.00          HE\n" %(num_res, cen_str))
         for prob in one_result[4]:
             num_at += 1
@@ -211,6 +211,6 @@ def _print_pdb(sorted_data, filename):
                 else:
                     prb_str += prb_center
             for ch in chains:
-                file_pdb.write("ATOM" +" "*(7-len(str(num_at))) + "%s   C  SLN %s" %(num_at, ch))
+                file_pdb.write("ATOM" +" "*(7-len(str(num_at))) + "%s  XE  SLN %s" %(num_at, ch))
                 file_pdb.write(" "*(3-len(str(num_res))) + "%s     %s  1.00  0.00          XE\n" %(num_res, prb_str))
     file_pdb.close()
