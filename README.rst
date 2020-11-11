@@ -72,6 +72,8 @@ BioMetAll is an open-source software licensed under the BSD-3 Clause License. Ch
 History of versions
 -------------------
 
+- **v0.2:** New *backbone_clashes* and *sidechain_clashes* parameters, which allow to customize the filtering of probes with clashes.
+
 - **v0.1:** Release version used in the preparation of the ChemRxiv preprint.
 
 OS Compatibility
