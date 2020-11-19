@@ -22,11 +22,11 @@ Standalone executable
 
 1 - Download the executable for your Operating System:
 
-- `Linux <https://uab-my.sharepoint.com/:u:/g/personal/2132358_uab_cat/EVRjj4LglPVHrkgSvRWQWfEBlOMb2nPdOM2EWoh5PIHJsA?e=i6oBIv>`_. Tested on Ubuntu 16.04, 18.04 and 20.
+- `Linux <https://drive.google.com/file/d/1CVPovkEldYhOQBK1h0NI0BfTD6JEF_3i/view?usp=sharing>`_. Tested on Ubuntu 16.04, 18.04 and 20.
 
-- `macOS <https://uab-my.sharepoint.com/:u:/g/personal/2132358_uab_cat/EaPD2Clf9EROnoT-CKkOJYQBy086icwCiBl_xQpfC6QOwA?e=sGiK0a>`_. Tested on macOS 10.15 Catalina.
+- `macOS <https://drive.google.com/file/d/1obcW3qWFfsq0XoS3ftdgqaVV8CX5HoCD/view?usp=sharing>`_. Tested on macOS 10.15 Catalina.
 
-- `Windows 10 <https://uab-my.sharepoint.com/:u:/g/personal/2132358_uab_cat/EfPJLeLZecVNibX-rN1uEaoBWuKVeC-gyDp5KHx-VfHBmQ?e=BEnbqD>`_. Tested on Windows 10.
+- `Windows 10 <https://drive.google.com/file/d/18SNp6p1ejRhQqKhdvU_ikPKWA-cHU04j/view?usp=sharing>`_. Tested on Windows 10.
 
 .. tip::
 
