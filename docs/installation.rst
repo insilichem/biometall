@@ -48,12 +48,6 @@ To install BioMetAll from the PyPi repository, you should type in your terminal 
    To install packages from the PyPi repository, you must have Python >=3.5 and pip installed in your computer. An expanded explanation of the requirements for installing PyPi packages can be found `here <https://packaging.python.org/tutorials/installing-packages/#requirements-for-installing-packages>`_.
 
 
-
-Check everything is OK
-======================
-
-
-
 OS Compatibility
 ================
 
