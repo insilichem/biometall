@@ -17,6 +17,7 @@ import itertools
 import copy
 import urllib.request
 from functools import partial
+from ._version import get_versions
 
 # BioMetAll modules
 from .modules.data import DIST_PROBE_ALPHA, DIST_PROBE_BETA, ANGLE_PAB
@@ -32,6 +33,14 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
         propose_mutations_to='', custom_radius=None, custom_center=None,
         cores_number=None, backbone_clashes_threshold=1.0,
         sidechain_clashes_threshold=0.0, **kwargs):
+    # Print header
+    versions = get_versions()
+    __version__ = versions['version']
+    str_header = "You are running BioMetAll {}".format(__version__)
+    print(str_header)
+    print("*" * len(str_header))
+    print("")
+
     filename, file_extension = os.path.splitext(inputfile)
 
     if motif:
@@ -196,6 +205,9 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
     text_filename = "results_biometall_%s%s.txt" %(os.path.basename(filename), file_name_addendum)
     text_filename = os.path.join(os.path.dirname(inputfile), text_filename)
     f = open(text_filename, "w")
+    str_header = "*****BioMetAll {}".format(__version__)
+    f.write(str_header)
+    f.write('\n')
     if motif:
         f.write('Searching for motif: {}\n'.format(motif))
     if propose_mutations_to:
