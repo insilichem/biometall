@@ -16,7 +16,7 @@ BioMetAll
 .. image:: https://img.shields.io/pypi/v/biometall
    :target: https://pypi.org/project/biometall/
 
-.. image:: https://img.shields.io/pypi/pyversions/biometall
+.. image:: https://img.shields.io/badge/python-3.7-green
    :target: https://www.python.org/downloads/release/python-377/
 
 .. image:: https://img.shields.io/pypi/l/biometall
