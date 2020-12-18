@@ -32,7 +32,7 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
         consider_backbone_residues='[]', cluster_cutoff=0.0, pdb=False,
         propose_mutations_to='', custom_radius=None, custom_center=None,
         cores_number=None, backbone_clashes_threshold=1.0,
-        sidechain_clashes_threshold=0.0, **kwargs):
+        sidechain_clashes_threshold=0.0, cmd_str="", **kwargs):
     # Print header
     versions = get_versions()
     __version__ = versions['version']
@@ -63,6 +63,16 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
     else:
         mutated_motif = None
 
+    #Set residues to consider as coordinating
+    if propose_mutations_to:
+        tot = mutated_motif_list + motifs_list
+        residues = list(set(x for l in tot for x in l))
+    elif motif:
+        tot = motifs_list
+        residues = list(set(x for l in tot for x in l))
+    else:
+        residues = list(map(str, residues.strip('[]').split(',')))
+
     # Control of a correct usage of parameters
     if propose_mutations_to and motif:
         #min_coordinators should be at least len(motif) + len(mutated_motif)
@@ -77,12 +87,6 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
             min_coordinators = len(motifs)
             print("min_coordinators has been set to {} due to the motif length".format(len(motifs)))
 
-    #Set residues to consider as coordinating
-    if propose_mutations_to:
-        tot = mutated_motif_list + motifs_list
-        residues = list(set(x for l in tot for x in l))
-    else:
-        residues = list(map(str, residues.strip('[]').split(',')))
     #Set residues to consider as coordinating in backbone oxygens
     if consider_backbone_residues == '[]':
         consider_backbone_residues = None
@@ -208,11 +212,8 @@ def run(inputfile, min_coordinators=3, min_sidechain=2,
     str_header = "*****BioMetAll {}".format(__version__)
     f.write(str_header)
     f.write('\n')
-    if motif:
-        f.write('Searching for motif: {}\n'.format(motif))
-    if propose_mutations_to:
-        f.write('Proposing mutations to achieve: {}\n'.format(propose_mutations_to))
-
+    f.write(cmd_str)
+    f.write('\n')
     f.write(' {:>{pos_width}} | {:^{residues_width}} | {:{coord_width}} | {:{probes_width}} | {:{radius_width}} | {:{mutations_width}} \n'.format(
             '#', 'Coordinating residues', 'Coordinates of center', 'Num. probes', 'Radius search' , 'Proposed mutations', pos_width=pos_width, residues_width=residues_width, coord_width=coord_width,
             probes_width=probes_width, radius_width=radius_width, mutations_width=mutations_width))

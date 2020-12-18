@@ -1,6 +1,7 @@
 import argparse
 import multiprocessing
 from biometall import run
+import sys
 
 def parse_cli():
     p = argparse.ArgumentParser()
@@ -36,11 +37,13 @@ def parse_cli():
     p.add_argument('--sidechain_clashes', type=float,
         dest='sidechain_clashes_threshold', default=0.0,
         help='Distance from a grid probe to a sidechain atom that defines a clash. The probes at less distance from any sidechain atom will be discarded. For example, if set to 1.0, all probes nearer than 1.0 Angstroms from any sidechain atom of the protein will be discarded. Default: 0.0')
-    return p.parse_args()
+    cmd_str = "*****biometall " + " ".join(sys.argv[1:])
+
+    return p.parse_args(), cmd_str
 
 def main():
-    args = parse_cli()
-    run(**vars(args))
+    args, cmd_str = parse_cli()
+    run(**vars(args), cmd_str=cmd_str)
 
 if __name__ == '__main__':
     multiprocessing.freeze_support()
