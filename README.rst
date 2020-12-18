@@ -22,8 +22,8 @@ BioMetAll
 .. image:: https://img.shields.io/pypi/l/biometall
    :target: https://opensource.org/licenses/BSD-3-Clause
 
-.. image:: https://img.shields.io/badge/doi-10.26434%2Fchemrxiv.12668651.v1-blue
-   :target: https://doi.org/10.26434/chemrxiv.12668651.v1
+.. image:: https://img.shields.io/badge/doi-https%3A%2F%2Fdoi.org%2F10.1021%2Facs.jcim.0c00827-blue
+   :target: https://doi.org/10.1021/acs.jcim.0c00827
 
 BioMetAll is a command line application to allow the identification of metal-binding
 sites in proteins from backbone preorganization.
@@ -72,6 +72,8 @@ BioMetAll is an open-source software licensed under the BSD-3 Clause License. Ch
 History of versions
 -------------------
 
+- **v1.0:** Release version used in the preparation of the JCIM article.
+
 - **v0.2:** New *backbone_clashes* and *sidechain_clashes* parameters, which allow to customize the filtering of probes with clashes.
 
 - **v0.1:** Release version used in the preparation of the ChemRxiv preprint.
@@ -86,7 +88,7 @@ If you find some dificulties when installing it in a concrete distribution, plea
 How to cite this software
 -------------------------
 
-Sánchez-Aparicio, J.-E.; Tiessler-Sala, L.; Velasco-Carneros, L.; Roldán-Martín, L.; Sciortino, G.; Maréchal, J.-D.. Biometall: Identifying Metal-binding Sites in Proteins from Backbone Preorganization, 2020.
+Sánchez-Aparicio, J.-E.; Tiessler-Sala, L.; Velasco-Carneros, L.; Roldán-Martín, L.; Sciortino, G.; Maréchal, J.-D.. Biometall: Identifying Metal-binding Sites in Proteins from Backbone Preorganization, *J. Chem. Inf. Model.*, **2020**, https://dx.doi.org/10.1021/acs.jcim.0c00827.
 
 Acknowledgements
 ----------------
