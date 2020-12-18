@@ -68,7 +68,7 @@ def test_full_calculation(inputfile, min_coordinators, min_sidechain, residues,
     result_text_path = os.path.join(d, output_text_name)
     with open(output_text_path, "r") as output_file, \
          open(result_text_path, "r") as result_file:
-        assert output_file.readlines()[:-1] == result_file.readlines()[:-1]
+        assert output_file.readlines()[0:-1] == result_file.readlines()[2:-1]
 
     if output_pdb:
         output_pdb_path = os.path.join(TEST_DATA_DIR, output_pdb)
