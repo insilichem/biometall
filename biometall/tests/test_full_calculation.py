@@ -14,7 +14,7 @@ testdata = [
                 '1oi0_output0.txt', 'results_biometall_1oi0.txt',
                 '1oi0_output0.pdb', 'probes_1oi0.pdb'),
             ('1oi0.pdb', 3, 2, '[ASP,HIS,GLU,CYS]', '[GLU,GLU,ASP/TYR]', 1.0,
-                '[]', 0.0, True, '', None, None, None, 1.0, 0.0,
+                '[]', 0.2, True, '', None, None, None, 1.0, 0.0,
                 '1oi0_output1.txt', 'results_biometall_1oi0_GLU_GLU_ASP-TYR.txt',
                 '1oi0_output1.pdb', 'probes_1oi0_GLU_GLU_ASP-TYR.pdb'),
             ('1oi0.pdb', 3, 2, '[ASP,HIS,GLU,CYS]', '', 1.0,

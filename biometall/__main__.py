@@ -10,7 +10,7 @@ def parse_cli():
     p.add_argument('--min_coordinators', type=int, default=3,
         help='Minimum number of coordinating residues of a given grid probe for that probe to be considered as potentially coordinating. Default: 3')
     p.add_argument('--residues', type=str, default='[ASP,HIS,GLU,CYS]',
-        help='Residues that are potentially coordinating. Requires a list of 3-letter aa code separated by commas. Default: [ASN,ASP,CYS,GLN,GLU,HIS,MET,SER,THR,TYR]')
+        help='Residues that are potentially coordinating. Requires a list of 3-letter aa code separated by commas. Default: [ASP,CYS,GLU,HIS]')
     p.add_argument('--motif', type=str, default='',
         help='Search for concrete potentially coordinating motifs. Check the manual for syntax (e.g. [HIS,HIS,GLU/ASP]), Default: None')
     p.add_argument('--mutations', type=str, dest='propose_mutations_to', default='',
