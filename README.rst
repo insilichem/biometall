@@ -53,7 +53,7 @@ Features
 - metalloenzyme design
 
 A more complete overview of the capabilities of the program, illustrated with several case studies, is
-available in our `ChemRxiv preprint <https://doi.org/10.26434/chemrxiv.12668651.v1>`_.
+available in our `JCIM article <https://doi.org/10.1021/acs.jcim.0c00827>`_.
 
 Documentation and support
 -------------------------
