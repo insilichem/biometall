@@ -88,13 +88,15 @@ If you find some dificulties when installing it in a concrete distribution, plea
 How to cite this software
 -------------------------
 
-Sánchez-Aparicio, J.-E.; Tiessler-Sala, L.; Velasco-Carneros, L.; Roldán-Martín, L.; Sciortino, G.; Maréchal, J.-D.. Biometall: Identifying Metal-binding Sites in Proteins from Backbone Preorganization, *J. Chem. Inf. Model.*, **2020**, https://dx.doi.org/10.1021/acs.jcim.0c00827.
+Sánchez-Aparicio, J.-E.; Tiessler-Sala, L.; Velasco-Carneros, L.; Roldán-Martín, L.; Sciortino, G.; Maréchal, J.-D.. Biometall: Identifying Metal-binding Sites in Proteins from Backbone Preorganization, *J. Chem. Inf. Model.*, **2020**, https://dx.doi.org/10.1021/acs.jcim.0c00827
+
+A preprint of the paper is freely available in `ChemRxiv <https://chemrxiv.org/articles/preprint/BioMetAll_Identifying_Metal-Binding_Sites_in_Proteins_from_Backbone_Preorganization/12668651>`_
 
 Acknowledgements
 ----------------
 
 Project template based on the
-`Computational Molecular Science Python Cookiecutter <https://github.com/molssi/cookiecutter-cms>`_ version 1.2.
+`Computational Molecular Science Python Cookiecutter <https://github.com/molssi/cookiecutter-cms>`_ version 1.2
 
 Standalone executables have been created with `PyInstaller <https://www.pyinstaller.org/>`_
 
