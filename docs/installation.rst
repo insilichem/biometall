@@ -26,7 +26,7 @@ Standalone executable
 
 - `macOS <https://drive.google.com/file/d/1f4Yy2t2lCBAME0rWZB-AmcsjyJVEr7N-/view?usp=sharing>`_. Tested on macOS 10.15 Catalina.
 
-- `Windows 10 <https://drive.google.com/file/d/18SNp6p1ejRhQqKhdvU_ikPKWA-cHU04j/view?usp=sharing>`_. Tested on Windows 10.
+- `Windows 10 <https://drive.google.com/file/d/1SjAiLLS-Az7LCvAeBDtMOZzyZjLXuFGv/view?usp=sharing>`_. Tested on Windows 10.
 
 .. tip::
 
