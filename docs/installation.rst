@@ -20,11 +20,11 @@ your terminal (Linux/macOS) or command prompt (Win10).
 Standalone executable
 =====================
 
-1 - Download the executable for your Operating System:
+1 - Download the executable for your Operating System (BioMetAll v1.0):
 
 - `Linux <https://drive.google.com/file/d/1CVPovkEldYhOQBK1h0NI0BfTD6JEF_3i/view?usp=sharing>`_. Tested on Ubuntu 16.04, 18.04 and 20.
 
-- `macOS <https://drive.google.com/file/d/1obcW3qWFfsq0XoS3ftdgqaVV8CX5HoCD/view?usp=sharing>`_. Tested on macOS 10.15 Catalina.
+- `macOS <https://drive.google.com/file/d/1f4Yy2t2lCBAME0rWZB-AmcsjyJVEr7N-/view?usp=sharing>`_. Tested on macOS 10.15 Catalina.
 
 - `Windows 10 <https://drive.google.com/file/d/18SNp6p1ejRhQqKhdvU_ikPKWA-cHU04j/view?usp=sharing>`_. Tested on Windows 10.
 
