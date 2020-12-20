@@ -22,7 +22,7 @@ Standalone executable
 
 1 - Download the executable for your Operating System (BioMetAll v1.0):
 
-- `Linux <https://drive.google.com/file/d/1CVPovkEldYhOQBK1h0NI0BfTD6JEF_3i/view?usp=sharing>`_. Tested on Ubuntu 16.04, 18.04 and 20.
+- `Linux <https://drive.google.com/file/d/1TO0HBXUUSNKqAYwWyjRwkifHyJu32Anj/view?usp=sharing>`_. Tested on Ubuntu 16.04, 18.04 and 20.
 
 - `macOS <https://drive.google.com/file/d/1f4Yy2t2lCBAME0rWZB-AmcsjyJVEr7N-/view?usp=sharing>`_. Tested on macOS 10.15 Catalina.
 
