@@ -202,3 +202,48 @@ The second option is to introduce some variability using the forward slash symbo
 4. Proposing mutations to complete a motif
 ==========================================
 
+BioMetAll can be used as a tool to start the design of a metal binding site by proposing mutations to complete an incipient binding site already present in the protein.
+
+As an illustrative case we can continue with the example of the protein with PDB code 1dhy. It can be seen that, among the binding sites with three coordinating residues, there is none formed by three aspartates:
+
+::
+
+        biometall --motif [ASP,ASP,ASP] 1dhy
+
+.. image:: images/tutorial1_image5.png
+    :align: center
+    :alt: Result of the execution
+
+However, there are eight possible binding sites with two coordinating aspartates:
+
+::
+
+        biometall --motif [ASP,ASP] 1dhy
+
+.. image:: images/tutorial1_image6.png
+    :align: center
+    :alt: Result of the execution
+
+A design exercise could be to find the options to complete these ASP,ASP motifs with another aspartate to form a triad. This is done with the combination of the --motif and --mutations options. In the `motif` option we will indicate the incipient motif already present in the protein (in this case ASP,ASP). In the `mutations` option, we will indicate the amino acid/s necessary to complete the desired motif (in this case, another ASP to complete the triad). The command will be the following:
+
+::
+     
+        biometall --motif [ASP,ASP] --mutations [ASP] 1dhy
+        
+.. image:: images/tutorial1_image7.png
+    :align: center
+    :alt: Result of the execution
+
+The result shows that seven of the eight ASP,ASP motifs could be completed to achieve the aspartate triad. The different mutation options are listed in the "proposed mutations" column, along with the number of probes of each option. As indicated in the BioMetAll article (benchmark and case study 3), the number of probes can be used to prioritize the solutions, in this case being the most favourable ones:
+    
+    i) the mutation of residue 254 to aspartate, forming the triad ASP14,ASP57,ASP254
+    
+    ii) the mutation of residue 169 to aspartate, forming the triad ASP170,ASP243,ASP169
+    
+    iii) the mutation of residue 193 to aspartate, forming the triad ASP170,ASP243,ASP193. 
+    
+However, you should note that BioMetAll does not consider energetic terms, so the other solutions cannot be discarded beforehand.
+  
+.. tip::
+
+    As with motif searches, you can use forward slash notation to incorporate some variability in your search. The notation can be used in the `motif` or `mutations` options, or in both options at the same time. However, you should be aware that the interpretation of the results will increase in complexity with the variability of the search.
