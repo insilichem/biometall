@@ -173,6 +173,32 @@ By default, `BioMetAll` calculations are run in a parallel mode using all the ph
 3. Searching for a specific motif
 =================================
 
+In addition to searching a list of possible coordinating amino acids with the --residues option, there exists also the possiblity to search for a specific motif. The syntax offers two options: search for an exact motif and search for a variable motif.
+
+To search for an exact motif, you must enclose the motif in square brackets `[]`. The 3-letter code for the amino acids that make up the motif must be separated with commas (without spaces). For example, to search for motifs composed of two histidines and one asparte, you would use:
+
+::
+
+        biometall --motif [HIS,HIS,ASP] 1dhy
+    
+.. image:: images/tutorial1_image3.png
+    :align: center
+    :alt: Result of the execution
+
+The second option is to introduce some variability using the forward slash symbol `/`. It is used to indicate that a residue of the motif has several alternatives. For example, you could search for motifs composed of two histidines and either an aspartate or a glutamate with the following command:
+
+::
+
+        biometall --motif [HIS,HIS,ASP/GLU] 1dhy
+
+.. image:: images/tutorial1_image4.PNG
+    :align: center
+    :alt: Result of the execution
+
+.. tip::
+
+    You can use slash notation in more than one position of the motif. Also, more than two options are allowed in each position. For example, [HIS/CYS,HIS,ASP/GLU/TYR] would represent a motif where one position should be either a histidine or a cysteine, another position should be a histidine, and the other position either an aspartate, a glutamate or a tyrosine. 
+
 4. Proposing mutations to complete a motif
 ==========================================
 
