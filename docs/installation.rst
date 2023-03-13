@@ -22,11 +22,11 @@ Standalone executable
 
 1 - Download the executable for your Operating System (BioMetAll v1.0):
 
-- `Linux <https://drive.google.com/file/d/1TO0HBXUUSNKqAYwWyjRwkifHyJu32Anj/view?usp=sharing>`_. Tested on Ubuntu 16.04, 18.04 and 20.
+- `Linux <https://github.com/insilichem/biometall/releases/download/v1.0/biometall_ubuntu>`_. Tested on Ubuntu 18.04, 20.04 and 22.04.
 
-- `macOS <https://drive.google.com/file/d/1f4Yy2t2lCBAME0rWZB-AmcsjyJVEr7N-/view?usp=sharing>`_. Tested on macOS 10.15 Catalina.
+- `macOS <https://github.com/insilichem/biometall/releases/download/v1.0/biometall_mac>`_. Tested on macOS 10.15 Catalina.
 
-- `Windows 10 <https://drive.google.com/file/d/1SjAiLLS-Az7LCvAeBDtMOZzyZjLXuFGv/view?usp=sharing>`_. Tested on Windows 10.
+- `Windows 10 <https://github.com/insilichem/biometall/releases/download/v1.0/biometall.exe>`_. Tested on Windows 10.
 
 .. tip::
 
