@@ -19,8 +19,8 @@ BioMetAll
 .. image:: https://img.shields.io/badge/python-3.7-green
    :target: https://www.python.org/downloads/release/python-377/
 
-.. image:: https://img.shields.io/pypi/l/biometall
-   :target: https://opensource.org/licenses/BSD-3-Clause
+.. image:: https://img.shields.io/badge/license-LGPL3-blue
+   :target: https://opensource.org/license/lgpl-3-0
 
 .. image:: https://img.shields.io/badge/doi-https%3A%2F%2Fdoi.org%2F10.1021%2Facs.jcim.0c00827-blue
    :target: https://doi.org/10.1021/acs.jcim.0c00827
